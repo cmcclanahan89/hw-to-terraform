@@ -8,8 +8,6 @@ import (
 	"os"
 )
 
-// ... your GetOS() function ...
-
 func CreateJsonOutput() {
 	file, ferr := os.Create("output/datacollection.json")
 	if ferr != nil {
@@ -21,7 +19,7 @@ func CreateJsonOutput() {
 }
 
 func AddLinetoJson(info pkg.InfoCollect, path string) {
-	jsonFile, jerr := os.Open("output/datacollection.json")
+	jsonFile, jerr := os.Create("output/datacollection.json")
 	if jerr != nil {
 		fmt.Println("Failed to open file:", jerr)
 		return
