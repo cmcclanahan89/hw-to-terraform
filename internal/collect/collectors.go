@@ -75,7 +75,6 @@ func GetHostIP() net.IP {
 	defer hostIP.Close()
 
 	localAddress := hostIP.LocalAddr().(*net.UDPAddr)
-	// fmt.Println("IP Address:", localAddress.IP)
 	return localAddress.IP
 
 }
