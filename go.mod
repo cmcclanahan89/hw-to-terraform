@@ -2,7 +2,10 @@ module hw-to-terraform
 
 go 1.24.4
 
-require github.com/shirou/gopsutil/v4 v4.25.6
+require (
+	github.com/shirou/gopsutil v3.21.11+incompatible
+	github.com/shirou/gopsutil/v4 v4.25.6
+)
 
 require (
 	github.com/ebitengine/purego v0.8.4 // indirect

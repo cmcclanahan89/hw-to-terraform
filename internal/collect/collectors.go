@@ -1,12 +1,16 @@
 package collect
 
 import (
+	"fmt"
 	"log"
 	"net"
+	"os"
 	"os/exec"
 	"runtime"
+	"strconv"
 	"strings"
 
+	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/v4/mem"
 )
 
@@ -86,4 +90,54 @@ func GetRam() (uint64, error) {
 		log.Fatal(err)
 	}
 	return (ramAmount.Total / (1 << 30)), nil // Convert bytes to GiB
+}
+
+func GetCores() (int, int, error) {
+	switch runtime.GOOS {
+	case "linux":
+		// Logical cores
+		out, err := exec.Command("nproc").Output()
+		if err != nil {
+			return 0, 0, fmt.Errorf("error running nproc: %w", err)
+		}
+		logical, err := strconv.Atoi(strings.TrimSpace(string(out)))
+		if err != nil {
+			return 0, 0, fmt.Errorf("error parsing nproc output: %w", err)
+		}
+
+		// Physical cores (awk is simplest for one-liner)
+		cmd := `awk '/^core id/ {print $4}' /proc/cpuinfo | sort -u | wc -l`
+		out, err = exec.Command("bash", "-c", cmd).Output()
+		if err != nil {
+			return logical, 0, fmt.Errorf("error running core id awk: %w", err)
+		}
+		physical, err := strconv.Atoi(strings.TrimSpace(string(out)))
+		if err != nil {
+			return logical, 0, fmt.Errorf("error parsing physical core count: %w", err)
+		}
+
+		return logical, physical, nil
+
+	case "windows":
+		logical, err := cpu.Counts(true)
+		if err != nil {
+			return 0, 0, err
+		}
+		physical, err := cpu.Counts(false)
+		if err != nil {
+			return 0, 0, err
+		}
+		return logical, physical, nil
+
+	default:
+		return 0, 0, fmt.Errorf("unsupported OS: %s", runtime.GOOS)
+	}
+}
+
+func GetHostname() (string, error) {
+	hostname, err := os.Hostname()
+	if err != nil {
+		return "", nil
+	}
+	return hostname, nil
 }

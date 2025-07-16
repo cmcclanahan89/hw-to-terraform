@@ -33,17 +33,29 @@ func main() {
 	}
 	ramStr := strconv.FormatUint(ramAmount, 10) + " GiB"
 
+	logicalCores, physicalCores, err := collect.GetCores()
+	if err != nil {
+		fmt.Println("Error Gathering Core Count:", err)
+		return
+	}
+
+	hostname, err := collect.GetHostname()
+	if err != nil {
+		fmt.Println("Error getting hostname:", err)
+		return
+	}
+
 	info := pkg.InfoCollect{
 		SchemaVersion: "1.0.0",
 		CollectedAt:   time.Now(),
-		Hostname:      "your-hostname-here", // replace with actual value
+		Hostname:      hostname, // replace with actual value
 		OS:            osName,
-		Arch:          arch,   // replace with actual value
-		LogicalCores:  8,      // replace with actual value
-		PhysicalCores: 4,      // replace with actual value
-		Memory:        ramStr, // replace with actual value
-		Disks:         nil,    // or fill in actual disk info
-		IPAddress:     hostIP, // replace with actual value
+		Arch:          arch,          // replace with actual value
+		LogicalCores:  logicalCores,  // replace with actual value
+		PhysicalCores: physicalCores, // replace with actual value
+		Memory:        ramStr,        // replace with actual value
+		Disks:         nil,           // or fill in actual disk info
+		IPAddress:     hostIP,        // replace with actual value
 
 	}
 
