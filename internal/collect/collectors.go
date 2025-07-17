@@ -164,7 +164,6 @@ func GetTotalDiskStats() (pkg.DiskStats, error) {
 	var util float64
 	if total > 0 {
 		util = (float64(used) / float64(total)) * 100
-		util = math.Round(util*100) / 100
 	}
 
 	totalGB := float64(total) / (1024 * 1024 * 1024)
