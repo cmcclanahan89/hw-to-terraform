@@ -16,8 +16,6 @@ type InfoCollect struct {
 }
 
 type DiskStats struct {
-	Mount string  `json:"mount"`
-	FS    string  `json:"fs"`
-	Used  uint64  `json:"used_bytes"`
-	Util  float64 `json:"used_percent"`
+	TotalGB float64 `json:"total_bytes"`
+	Util    float64 `json:"used_percent"`
 }

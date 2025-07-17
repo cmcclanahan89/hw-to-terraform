@@ -45,18 +45,23 @@ func main() {
 		return
 	}
 
+	diskStats, err := collect.GetTotalDiskStats()
+	if err != nil {
+		fmt.Println("Error collecting disk stats:", err)
+		return
+	}
+
 	info := pkg.InfoCollect{
 		SchemaVersion: "1.0.0",
 		CollectedAt:   time.Now(),
 		Hostname:      hostname, // replace with actual value
 		OS:            osName,
-		Arch:          arch,          // replace with actual value
-		LogicalCores:  logicalCores,  // replace with actual value
-		PhysicalCores: physicalCores, // replace with actual value
-		Memory:        ramStr,        // replace with actual value
-		Disks:         nil,           // or fill in actual disk info
-		IPAddress:     hostIP,        // replace with actual value
-
+		Arch:          arch,                       // replace with actual value
+		LogicalCores:  logicalCores,               // replace with actual value
+		PhysicalCores: physicalCores,              // replace with actual value
+		Memory:        ramStr,                     // replace with actual value
+		Disks:         []pkg.DiskStats{diskStats}, // or fill in actual disk info
+		IPAddress:     hostIP,                     // replace with actual value
 	}
 
 	render.AddLinetoJson(info, "output/datacollection.json")

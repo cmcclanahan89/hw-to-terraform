@@ -2,7 +2,9 @@ package collect
 
 import (
 	"fmt"
+	"hw-to-terraform/pkg"
 	"log"
+	"math"
 	"net"
 	"os"
 	"os/exec"
@@ -11,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/shirou/gopsutil/cpu"
+	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/v4/mem"
 )
 
@@ -140,4 +143,37 @@ func GetHostname() (string, error) {
 		return "", nil
 	}
 	return hostname, nil
+}
+
+func GetTotalDiskStats() (pkg.DiskStats, error) {
+	partitions, err := disk.Partitions(false)
+	if err != nil {
+		return pkg.DiskStats{}, err
+	}
+
+	var total, used uint64
+	for _, p := range partitions {
+		usage, err := disk.Usage(p.Mountpoint)
+		if err != nil {
+			continue // skip partitions we can't access
+		}
+		total += usage.Total
+		used += usage.Used
+	}
+
+	var util float64
+	if total > 0 {
+		util = (float64(used) / float64(total)) * 100
+		util = math.Round(util*100) / 100
+	}
+
+	totalGB := float64(total) / (1024 * 1024 * 1024)
+	// Optional: Round to 2 decimals
+	totalGB = math.Round(totalGB*100) / 100
+	util = math.Round(util*100) / 100
+
+	return pkg.DiskStats{
+		TotalGB: totalGB,
+		Util:    util,
+	}, nil
 }
