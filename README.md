@@ -14,7 +14,7 @@ This is a personal project to help me learn more Go and hopefully transition to 
  - Converts system inventory data to:
     - **Terraform**
     - **Bicep**
-- CLI Based Workflow: Scan -> JSON -> IaC File
+- Workflow: Scan -> JSON -> IaC File
 
 # Roadmap
 ### Implemented
