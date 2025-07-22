@@ -2,11 +2,25 @@
 
 This is a personal project to help me learn more Go and hopefully transition to a SRE or Devops position. 
 
-I want this module:
-- To scan a machine (either unix or Windows) 
-- Gather information. IE Hostname, Architecture, RAM amount etc
+Project Goals
+- Learn Go through practical applications
+- Collect server information from Unix and Windows systems (hostname, architecture, RAM, CPU, etc)
+- Automatically generate Infrastructure as Code (IaC) files from this inventory data.
+    - Support multiple IaC tools (Terraform, Bicep; more in future).
+- Streamline the process of cloud infrastructure onboarding and environment replication.
 
-With the information I want to:
-- Use the collected information to generate IaC files for cloud deployment. 
-- Do differnt types of IaC, either Terraform or Bicep. 
+Features
+ - Cross-Platform (Windows/Unix) inventory collection.
+ - Converts system inventory data to:
+    - Terraform
+    - Bicep
+- ClI Based Workflow: Scan -> JSON -> IaC File
 
+Roadmap
+- Implemented
+* Collect system information and export to JSON
+
+- To Be Implemented
+* Generate Terraform file from inventory data
+* Generate Bicep file from inventory data
+* Support more resource types (networks, disks, tags)
