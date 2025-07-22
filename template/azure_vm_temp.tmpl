@@ -1,0 +1,20 @@
+resource "azurerm_linux_virtual_machine" "{{.Hostname}}" {
+  name                  = "{{.Hostname}}"
+  location              = "eastus"              # You can make this configurable
+  size                  = "{{.VMSize}}"         # Derived from logical_cores/RAM
+  admin_username        = "azureuser"           # Or make dynamic
+  network_interface_ids = [azurerm_network_interface.{{.Hostname}}.id]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+    disk_size_gb         = {{.DiskGB}}
+  }
+
+  source_image_reference {
+    publisher = "{{.OSPublisher}}"
+    offer     = "{{.OSOffer}}"
+    sku       = "{{.OSSku}}"
+    version   = "latest"
+  }
+}
