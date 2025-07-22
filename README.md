@@ -3,7 +3,7 @@
 This is a personal project to help me learn more Go and hopefully transition to a SRE or Devops position. 
 
 # Project Goals
-- Learn Go through practical applications
+- **Learn Go** through practical applications
 - Collect server information from Unix and Windows systems (hostname, architecture, RAM, CPU, etc)
 - Automatically generate Infrastructure as Code (IaC) files from this inventory data.
     - Support multiple IaC tools (Terraform, Bicep; more in future).
@@ -17,10 +17,10 @@ This is a personal project to help me learn more Go and hopefully transition to 
 - ClI Based Workflow: Scan -> JSON -> IaC File
 
 # Roadmap
-## Implemented
+### Implemented
 * Collect system information and export to JSON
 
-## To Be Implemented
+### To Be Implemented
 * Generate Terraform file from inventory data
 * Generate Bicep file from inventory data
 * Support more resource types (networks, disks, tags)
