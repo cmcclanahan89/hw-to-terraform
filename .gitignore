@@ -19,7 +19,7 @@ profile.cov
 
 # Dependency directories (remove the comment below to include it)
 output/
-template/
+/template
 *.tfstate*
 .terraform/
 
