@@ -19,3 +19,13 @@ type DiskStats struct {
 	TotalGB float64 `json:"total_bytes"`
 	Util    float64 `json:"used_percent"`
 }
+
+type VMTemplateData struct {
+	Hostname    string
+	VMSize      string
+	DiskGB      float64
+	OSPublisher string
+	OSOffer     string
+	OSSku       string
+	IPAddress   string
+}
