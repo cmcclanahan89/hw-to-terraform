@@ -1,6 +1,6 @@
 # hw-to-terraform
 
-This is a personal project to help me learn more Go. 
+This is a personal project to help me learn more Go and hopefully transition to a SRE or Devops position. 
 
 I want this module:
 - To scan a machine (either unix or Windows) 
@@ -10,4 +10,3 @@ With the information I want to:
 - Use the collected information to generate IaC files for cloud deployment. 
 - Do differnt types of IaC, either Terraform or Bicep. 
 
-Mostly I'm using this a project to help teach myself Go and what it can do. 
