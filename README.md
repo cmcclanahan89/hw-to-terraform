@@ -20,7 +20,9 @@ This is a personal project to help me learn more Go and hopefully transition to 
 ### Implemented
 * Collect system information and export to JSON
 
-### To Be Implemented
+### Implemented but WIP
 * Generate Terraform file from inventory data
+
+### To Be Implemented
 * Generate Bicep file from inventory data
 * Support more resource types (networks, disks, tags)
