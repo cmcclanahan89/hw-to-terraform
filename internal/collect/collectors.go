@@ -108,7 +108,7 @@ func GetCores() (int, int, error) {
 			return 0, 0, fmt.Errorf("error parsing nproc output: %w", err)
 		}
 
-		// Physical cores (awk is simplest for one-liner)
+		//Physical Cores
 		cmd := `awk '/^core id/ {print $4}' /proc/cpuinfo | sort -u | wc -l`
 		out, err = exec.Command("bash", "-c", cmd).Output()
 		if err != nil {

@@ -41,20 +41,3 @@ func AddLinetoJson(info pkg.InfoCollect, path string) {
 		return
 	}
 }
-
-// func AddLinetoJson(info pkg.InfoCollect, path string) {
-// 	jsonFile, jerr := os.Create("output/datacollection.json")
-// 	if jerr != nil {
-// 		fmt.Println("Failed to open file:", jerr)
-// 		return
-// 	}
-// 	defer jsonFile.Close()
-
-// 	encoder := json.NewEncoder(jsonFile)
-// 	encoder.SetIndent("", "  ") // Pretty-print
-// 	if jerr := encoder.Encode(info); jerr != nil {
-// 		fmt.Println("Failed to encode JSON:", jerr)
-// 		return
-// 	}
-
-// }
