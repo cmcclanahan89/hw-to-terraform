@@ -22,7 +22,7 @@ This is a personal project to help me learn more Go and hopefully transition to 
 
 ### Implemented but WIP
 * Generate Terraform file from inventory data
+* Generate Bicep file from inventory data
 
 ### To Be Implemented
-* Generate Bicep file from inventory data
 * Support more resource types (networks, disks, tags)
