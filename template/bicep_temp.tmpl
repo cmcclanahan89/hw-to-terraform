@@ -1,0 +1,64 @@
+@description('The hostname of the VM')
+param Hostname string
+
+@description('The Azure region to deploy to')
+param location string = 'eastus'
+
+@description('The size of the VM (e.g., Standard_B2s)')
+param VMSize string
+
+@description('The size of the OS disk in GB')
+param DiskGB int
+
+@description('The publisher of the OS image')
+param OSPublisher string
+
+@description('The offer of the OS image')
+param OSOffer string
+
+@description('The SKU of the OS image')
+param OSSku string
+
+@description('The resource ID of the network interface to attach')
+param networkInterfaceId string
+
+resource linuxVM 'Microsoft.Compute/virtualMachines@2023-03-01' = {
+  name: Hostname
+  location: location
+  properties: {
+    hardwareProfile: {
+      vmSize: {{.VMSize}}
+    }
+    osProfile: {
+      computerName: Hostname
+      adminUsername: 'azureuser'
+      linuxConfiguration: {
+        disablePasswordAuthentication: true
+        provisionVMAgent: true
+      }
+    }
+    storageProfile: {
+      osDisk: {
+        createOption: 'FromImage'
+        caching: 'ReadWrite'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+        diskSizeGB: {{.DiskGB}}
+      }
+      imageReference: {
+        publisher: {{.OSPublisher}}
+        offer: {{.OSOffer}}
+        sku: {{.OSSku}}
+        version: 'latest'
+      }
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterfaceId
+        }
+      ]
+    }
+  }
+}

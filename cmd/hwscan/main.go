@@ -9,12 +9,35 @@ import (
 	"hw-to-terraform/pkg"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 	"text/template"
 	"time"
 )
 
 func main() {
+
+	outputPath := "output/datacollection.json"
+	absPath, err := filepath.Abs(outputPath)
+	if err != nil {
+		log.Fatalf("Failed to resolve absolute path: %v", err)
+	}
+
+	mode := os.Args[1] // "terraform" or "bicep"
+	var tmplFile, outputFile string
+
+	switch mode {
+	case "terraform":
+		tmplFile = "template/terraform_vm_temp.tmpl"
+		outputFile = "output/main.tf"
+	case "bicep":
+		tmplFile = "template/bicep_temp.tmpl"
+		outputFile = "output/main.bicep"
+	default:
+		log.Fatalf("Unknown mode: %s", mode)
+	}
+
+	render.CreateJsonOutput()
 
 	osName, err := collect.GetOS()
 	if err != nil {
@@ -69,9 +92,9 @@ func main() {
 		IPAddress:     hostIP,
 	}
 
-	render.AddLinetoJson(info, "output/datacollection.json")
+	render.AddLinetoJson(info, absPath)
 
-	outputJson, err := os.Open("output/datacollection.json")
+	outputJson, err := os.Open(absPath)
 	if err != nil {
 		log.Fatal("Could not open file:", err)
 	}
@@ -89,7 +112,7 @@ func main() {
 		fmt.Println("Error determining size:", err)
 	}
 
-	osPub, osOffer, osSku := normalize.ParseOS("output/datacollection.json")
+	osPub, osOffer, osSku := normalize.ParseOS("absPath")
 	if err != nil {
 		fmt.Println("Error getting OS:", err)
 	}
@@ -106,12 +129,12 @@ func main() {
 		IPAddress:   hostIP,
 	}
 
-	tmpl, err := template.ParseFiles("template/azure_vm_temp.tmpl")
+	tmpl, err := template.ParseFiles(tmplFile) //"template/terraform_vm_temp.tmpl")
 	if err != nil {
 		log.Fatal("Error parsing template:", err)
 	}
 
-	out, err := os.Create("output/main.tf")
+	out, err := os.Create(outputFile) //"output/main.tf")
 	if err != nil {
 		log.Fatal("Error creating output file:", err)
 	}

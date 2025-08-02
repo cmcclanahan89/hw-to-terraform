@@ -2,6 +2,7 @@ package render
 
 import (
 	"encoding/json"
+	"path/filepath"
 
 	"fmt"
 	"hw-to-terraform/pkg"
@@ -19,9 +20,16 @@ func CreateJsonOutput() {
 }
 
 func AddLinetoJson(info pkg.InfoCollect, path string) {
-	jsonFile, jerr := os.Create("output/datacollection.json")
+	// Ensure the parent directory exists
+	err := os.MkdirAll(filepath.Dir(path), 0755)
+	if err != nil {
+		fmt.Println("Failed to create parent directories:", err)
+		return
+	}
+
+	jsonFile, jerr := os.Create(path)
 	if jerr != nil {
-		fmt.Println("Failed to open file:", jerr)
+		fmt.Println("Failed to create file:", jerr)
 		return
 	}
 	defer jsonFile.Close()
@@ -32,5 +40,21 @@ func AddLinetoJson(info pkg.InfoCollect, path string) {
 		fmt.Println("Failed to encode JSON:", jerr)
 		return
 	}
-
 }
+
+// func AddLinetoJson(info pkg.InfoCollect, path string) {
+// 	jsonFile, jerr := os.Create("output/datacollection.json")
+// 	if jerr != nil {
+// 		fmt.Println("Failed to open file:", jerr)
+// 		return
+// 	}
+// 	defer jsonFile.Close()
+
+// 	encoder := json.NewEncoder(jsonFile)
+// 	encoder.SetIndent("", "  ") // Pretty-print
+// 	if jerr := encoder.Encode(info); jerr != nil {
+// 		fmt.Println("Failed to encode JSON:", jerr)
+// 		return
+// 	}
+
+// }
