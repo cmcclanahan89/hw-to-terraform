@@ -27,7 +27,7 @@ resource linuxVM 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   location: location
   properties: {
     hardwareProfile: {
-      vmSize: {{.VMSize}}
+      vmSize: VMSize
     }
     osProfile: {
       computerName: Hostname
@@ -44,12 +44,12 @@ resource linuxVM 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
-        diskSizeGB: {{.DiskGB}}
+        diskSizeGB: DiskGB
       }
       imageReference: {
-        publisher: {{.OSPublisher}}
-        offer: {{.OSOffer}}
-        sku: {{.OSSku}}
+        publisher: OSPublisher
+        offer: OSOffer
+        sku: OSSku
         version: 'latest'
       }
     }

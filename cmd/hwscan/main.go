@@ -31,8 +31,8 @@ func main() {
 		tmplFile = "template/terraform_vm_temp.tmpl"
 		outputFile = "output/main.tf"
 	case "bicep":
-		tmplFile = "template/bicep_temp.tmpl"
-		outputFile = "output/main.bicep"
+		tmplFile = "template/bicep_param.tmpl"
+		outputFile = "output/parameters.json"
 	default:
 		log.Fatalf("Unknown mode: %s", mode)
 	}

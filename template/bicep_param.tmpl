@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "Hostname": { "value": "{{.Hostname}}-VM" },
+    "VMSize": { "value": "{{.VMSize}}" },
+    "DiskGB": { "value": "{{.DiskGB}}" },
+    "OSPublisher": { "value": "{{.OSPublisher}}" },
+    "OSOffer": { "value": "{{.OSOffer}}" },
+    "OSSku": { "value": "{{.OSSku}}" },
+    "networkInterfaceId": {
+      "value": "/subscriptions/<subId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"
+    }
+  }
+}
